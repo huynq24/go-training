@@ -25,7 +25,7 @@ func (biz *updateTag) UpdateTagBiz(ctx context.Context, id int, data *tagmodel.T
 		return err
 	}
 
-	if oldData.Title == "" {
+	if oldData.Status == 0 {
 		return errors.New("Data deleted")
 	}
 

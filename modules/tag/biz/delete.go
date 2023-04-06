@@ -25,7 +25,7 @@ func (biz *deleteTagBiz) DeleteTag(ctx context.Context, id int) error {
 		return err
 	}
 
-	if oldData.Title == "" {
+	if oldData.Status == 0 {
 		return errors.New("Data deleted")
 	}
 
