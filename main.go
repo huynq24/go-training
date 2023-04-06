@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang-training/app_context"
 	"golang-training/modules/category/transport/gincategory"
+	"golang-training/modules/product/transport/ginproduct"
 	"golang-training/modules/tag/transport/gintag"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -38,6 +39,15 @@ func main() {
 		categories.GET("/:id", gincategory.FindCategory(appCtx))
 		categories.PATCH("/:id", gincategory.UpdateCategory(appCtx))
 		categories.DELETE("/:id", gincategory.DeleteCategory(appCtx))
+	}
+
+	// product api
+	products := v1.Group("/products")
+	{
+		products.POST("", ginproduct.CreateProduct(appCtx))
+		products.GET("/:id", ginproduct.FindProduct(appCtx))
+		products.PATCH("/:id", ginproduct.UpdateProduct(appCtx))
+		products.DELETE("/:id", ginproduct.DeleteProduct(appCtx))
 	}
 
 	err = r.Run()

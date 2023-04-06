@@ -1,8 +1,18 @@
 package productmodel
 
+import (
+	"golang-training/common"
+)
+
 type Product struct {
-	Id          uint   `json:"id" gorm:"column:id;"`
-	Title       string `json:"title" gorm:"column:title;unique;not null;"`
-	Image       string `json:"image" gorm:"column:image"`
-	Description string `json:"description" gorm:"column:description"`
+	common.SQLModel `json:",inline"`
+	Title           string `json:"title" gorm:"column:title;unique;not null;"`
+	Image           string `json:"image" gorm:"column:image"`
+	Description     string `json:"description" gorm:"column:description"`
+	CategoryId      int    `json:"categoryId" gorm:"column:category_id"`
+	//Category        categorymodel.Category `json:"category" gorm:"foreignKey:CategoryId"`
+}
+
+func (Product) TableName() string {
+	return "products"
 }
