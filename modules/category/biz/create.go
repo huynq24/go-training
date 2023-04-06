@@ -3,10 +3,12 @@ package categorybiz
 import (
 	"context"
 	categorymodel "golang-training/modules/category/model"
+	"gorm.io/gorm"
 )
 
 type CreateCategoryStore interface {
 	Create(ctx context.Context, data *categorymodel.Category) error
+	FindCategoryExist(ctx context.Context, condition map[string]interface{}) (*categorymodel.Category, error)
 }
 
 type createCategoryBiz struct {
@@ -18,8 +20,14 @@ func NewCreateCategoryBiz(store CreateCategoryStore) *createCategoryBiz {
 }
 
 func (biz *createCategoryBiz) CreateCategory(ctx context.Context, data *categorymodel.Category) error {
-	if err := biz.store.Create(ctx, data); err != nil {
-		return err
+	_, err := biz.store.FindCategoryExist(ctx, map[string]interface{}{"title": data.Title})
+	if err != nil {
+		if err.Error() == gorm.ErrRecordNotFound.Error() && data.Title != "" {
+			if err := biz.store.Create(ctx, data); err != nil {
+				return err
+			}
+		}
+		return nil
 	}
 	return nil
 }

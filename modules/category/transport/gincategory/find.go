@@ -31,3 +31,20 @@ func FindCategory(ctx app_context.AppContext) gin.HandlerFunc {
 		context.JSON(http.StatusOK, result)
 	}
 }
+
+func FindAllCategories(ctx app_context.AppContext) gin.HandlerFunc {
+	return func(context *gin.Context) {
+		db := ctx.GetMainDBConnection()
+
+		store := categorystorage.NewSQLStore(db)
+		biz := categorybiz.NewFindCategoryBiz(store)
+
+		result, err := biz.FindAllCategories(context.Request.Context())
+
+		if err != nil {
+			panic(err)
+		}
+
+		context.JSON(http.StatusOK, result)
+	}
+}

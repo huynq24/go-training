@@ -31,3 +31,20 @@ func FindTag(ctx app_context.AppContext) gin.HandlerFunc {
 		context.JSON(http.StatusOK, result)
 	}
 }
+
+func FindAllTags(ctx app_context.AppContext) gin.HandlerFunc {
+	return func(context *gin.Context) {
+		db := ctx.GetMainDBConnection()
+
+		store := tagstorage.NewSQLStore(db)
+		biz := tagbiz.NewFindTagBiz(store)
+
+		result, err := biz.FindAllTags(context.Request.Context())
+
+		if err != nil {
+			panic(err)
+		}
+
+		context.JSON(http.StatusOK, result)
+	}
+}

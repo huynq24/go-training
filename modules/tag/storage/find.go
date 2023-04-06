@@ -19,3 +19,16 @@ func (s *sqlStore) FindDataWithCondition(context context.Context, condition map[
 
 	return &data, nil
 }
+
+func (s *sqlStore) FindAllData(context context.Context) (*[]tagmodel.Tag, error) {
+	var data []tagmodel.Tag
+
+	if err := s.db.Find(&data).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, errors.New("record not found")
+		}
+		return nil, err
+	}
+
+	return &data, nil
+}

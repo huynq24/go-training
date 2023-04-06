@@ -3,10 +3,12 @@ package productbiz
 import (
 	"context"
 	productmodel "golang-training/modules/product/model"
+	"gorm.io/gorm"
 )
 
 type CreateProductStore interface {
 	Create(ctx context.Context, data *productmodel.Product) error
+	FindProductExist(ctx context.Context, condition map[string]interface{}) (*productmodel.Product, error)
 }
 
 type createProductBiz struct {
@@ -18,8 +20,14 @@ func NewCreateProductBiz(store CreateProductStore) *createProductBiz {
 }
 
 func (biz *createProductBiz) CreateProduct(ctx context.Context, data *productmodel.Product) error {
-	if err := biz.store.Create(ctx, data); err != nil {
-		return err
+	_, err := biz.store.FindProductExist(ctx, map[string]interface{}{"title": data.Title, "category_id": data.CategoryId})
+	if err != nil {
+		if err.Error() == gorm.ErrRecordNotFound.Error() && data.Title != "" {
+			if err := biz.store.Create(ctx, data); err != nil {
+				return err
+			}
+		}
+		return nil
 	}
 	return nil
 }
