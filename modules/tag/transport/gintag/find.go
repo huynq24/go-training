@@ -16,6 +16,7 @@ func FindTag(ctx app_context.AppContext) gin.HandlerFunc {
 
 		if err != nil {
 			context.JSON(http.StatusBadRequest, err)
+			panic(err)
 			return
 		}
 

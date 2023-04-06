@@ -14,6 +14,7 @@ func CreateTag(appCtx app_context.AppContext) gin.HandlerFunc {
 		var data categorymodel.Category
 
 		if err := c.ShouldBind(&data); err != nil {
+			panic(err)
 			return
 		}
 
@@ -21,6 +22,7 @@ func CreateTag(appCtx app_context.AppContext) gin.HandlerFunc {
 		biz := categorybiz.NewCreateCategoryBiz(store)
 
 		if err := biz.CreateCategory(c.Request.Context(), &data); err != nil {
+			panic(err)
 			return
 		}
 

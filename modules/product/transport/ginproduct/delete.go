@@ -13,9 +13,10 @@ func DeleteProduct(appCtx app_context.AppContext) gin.HandlerFunc {
 		uid, err := strconv.Atoi(c.Param("id"))
 
 		if err != nil {
-			c.JSON(401, gin.H{
+			c.JSON(500, gin.H{
 				"error": err,
 			})
+			panic(err)
 			return
 		}
 
@@ -23,9 +24,10 @@ func DeleteProduct(appCtx app_context.AppContext) gin.HandlerFunc {
 		biz := productbiz.NewDeleteProductBiz(store)
 
 		if err := biz.DeleteProduct(c.Request.Context(), uid); err != nil {
-			c.JSON(401, gin.H{
+			c.JSON(500, gin.H{
 				"error": err,
 			})
+			panic(err)
 			return
 		}
 

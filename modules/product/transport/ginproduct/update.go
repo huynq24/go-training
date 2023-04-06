@@ -13,18 +13,20 @@ func UpdateProduct(appCtx app_context.AppContext) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		uid, err := strconv.Atoi(c.Param("id"))
 		if err != nil {
-			c.JSON(401, gin.H{
+			c.JSON(500, gin.H{
 				"error": err,
 			})
+			panic(err)
 			return
 		}
 
 		var data productmodel.Product
 
 		if err := c.ShouldBind(&data); err != nil {
-			c.JSON(401, gin.H{
+			c.JSON(500, gin.H{
 				"error": err,
 			})
+			panic(err)
 			return
 		}
 
@@ -32,9 +34,10 @@ func UpdateProduct(appCtx app_context.AppContext) gin.HandlerFunc {
 		biz := productbiz.NewUpdateProductBiz(store)
 
 		if err := biz.UpdateProductBiz(c.Request.Context(), uid, &data); err != nil {
-			c.JSON(401, gin.H{
+			c.JSON(500, gin.H{
 				"error": err,
 			})
+			panic(err)
 			return
 		}
 

@@ -14,6 +14,7 @@ func CreateProduct(appCtx app_context.AppContext) gin.HandlerFunc {
 		var data productmodel.Product
 
 		if err := c.ShouldBind(&data); err != nil {
+			panic(err)
 			return
 		}
 
@@ -21,6 +22,7 @@ func CreateProduct(appCtx app_context.AppContext) gin.HandlerFunc {
 		biz := productbiz.NewCreateProductBiz(store)
 
 		if err := biz.CreateProduct(c.Request.Context(), &data); err != nil {
+			panic(err)
 			return
 		}
 
