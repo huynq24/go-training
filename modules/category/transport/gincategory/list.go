@@ -1,16 +1,16 @@
-package ginproduct
+package gincategory
 
 import (
 	"github.com/gin-gonic/gin"
 	"golang-training/app_context"
 	"golang-training/common"
-	productbiz "golang-training/modules/product/biz"
-	productmodel "golang-training/modules/product/model"
-	productstorage "golang-training/modules/product/storage"
+	categorybiz "golang-training/modules/category/biz"
+	categorymodel "golang-training/modules/category/model"
+	categorystorage "golang-training/modules/category/storage"
 	"net/http"
 )
 
-func ListProducts(appCtx app_context.AppContext) gin.HandlerFunc {
+func ListCategories(appCtx app_context.AppContext) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		db := appCtx.GetMainDBConnection()
 
@@ -20,15 +20,14 @@ func ListProducts(appCtx app_context.AppContext) gin.HandlerFunc {
 		}
 		pagingData.Fulfill()
 
-		var filter productmodel.Filter
+		var filter categorymodel.Filter
 		if err := c.ShouldBind(&filter); err != nil {
 			panic(err)
 		}
 
-		store := productstorage.NewSQLStore(db)
-		biz := productbiz.NewListProductBiz(store)
-
-		result, err := biz.ListProduct(c.Request.Context(), &filter, &pagingData)
+		store := categorystorage.NewSQLStore(db)
+		biz := categorybiz.NewListCategoryBiz(store)
+		result, err := biz.ListCategory(c.Request.Context(), &filter, &pagingData)
 
 		if err != nil {
 			panic(err)

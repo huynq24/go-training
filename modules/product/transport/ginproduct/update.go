@@ -16,8 +16,7 @@ func UpdateProduct(appCtx app_context.AppContext) gin.HandlerFunc {
 			panic(err)
 		}
 
-		var data productmodel.Product
-
+		var data productmodel.ProductUpdate
 		if err := c.ShouldBind(&data); err != nil {
 			panic(err)
 		}

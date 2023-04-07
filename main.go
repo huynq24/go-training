@@ -36,7 +36,7 @@ func main() {
 	tags := v1.Group("/tags")
 	{
 		tags.POST("", gintag.CreateTag(appCtx))
-		tags.GET("", gintag.FindAllTags(appCtx))
+		tags.GET("", gintag.ListTags(appCtx))
 		tags.GET("/:id", gintag.FindTag(appCtx))
 		tags.PATCH("/:id", gintag.UpdateTag(appCtx))
 		tags.DELETE("/:id", gintag.DeleteTag(appCtx))
@@ -46,7 +46,7 @@ func main() {
 	categories := v1.Group("/categories")
 	{
 		categories.POST("", gincategory.CreateTag(appCtx))
-		categories.GET("", gincategory.FindAllCategories(appCtx))
+		categories.GET("", gincategory.ListCategories(appCtx))
 		categories.GET("/:id", gincategory.FindCategory(appCtx))
 		categories.PATCH("/:id", gincategory.UpdateCategory(appCtx))
 		categories.DELETE("/:id", gincategory.DeleteCategory(appCtx))
