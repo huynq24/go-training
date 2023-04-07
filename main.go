@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"golang-training/app_context"
+	"golang-training/common"
 	"golang-training/modules/category/transport/gincategory"
 	"golang-training/modules/product/transport/ginproduct"
 	"golang-training/modules/tag/transport/gintag"
@@ -11,7 +12,18 @@ import (
 )
 
 func main() {
-	dsn := "root:rootuser@tcp(127.0.0.1:3306)/testdb?charset=utf8mb4&parseTime=True&loc=Local"
+	config, err := common.LoadConfig()
+	if err != nil {
+		panic(err)
+	}
+
+	user := config.Mysql.User
+	password := config.Mysql.Password
+	ip := config.Mysql.Ip
+	port := config.Mysql.Port
+	dbName := config.Mysql.DbName
+
+	dsn := user + ":" + password + "@tcp(" + ip + ":" + port + ")/" + dbName + "?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
