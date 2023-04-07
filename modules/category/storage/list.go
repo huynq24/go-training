@@ -6,11 +6,11 @@ import (
 	categorymodel "golang-training/modules/category/model"
 )
 
-func (s *sqlStore) ListDataWithCondition(context context.Context, condition map[string]interface{}, filter *categorymodel.Filter, paging *common.Paging, moreKeys ...string) ([]categorymodel.Category, error) {
+func (s *sqlStore) ListDataWithCondition(context context.Context, filter *categorymodel.Filter, paging *common.Paging, moreKeys ...string) ([]categorymodel.Category, error) {
 	var result []categorymodel.Category
 
 	db := s.db
-	db = db.WithContext(context).Table(categorymodel.Category{}.TableName()).Where(condition).Where("status in (1)")
+	db = db.WithContext(context).Table(categorymodel.Category{}.TableName()).Where("status in (1)")
 
 	if v := filter; v != nil {
 		if v.CategoryTitle != "" {

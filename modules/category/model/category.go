@@ -3,8 +3,8 @@ package categorymodel
 import "golang-training/common"
 
 type Category struct {
-	common.SQLModel `json:",inline"`
-	Title           string `json:"title" gorm:"column:title;unique;not null;"`
+	common.SQLModel
+	Title string `json:"title" binding:"required" gorm:"column:title;"`
 }
 
 func (Category) TableName() string {
