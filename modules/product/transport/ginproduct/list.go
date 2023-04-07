@@ -5,6 +5,7 @@ import (
 	"golang-training/app_context"
 	"golang-training/common"
 	productbiz "golang-training/modules/product/biz"
+	productmodel "golang-training/modules/product/model"
 	productstorage "golang-training/modules/product/storage"
 	"net/http"
 )
@@ -18,10 +19,16 @@ func ListProducts(appCtx app_context.AppContext) gin.HandlerFunc {
 			panic(err)
 		}
 		pagingData.Fulfill()
+
+		var filter productmodel.Filter
+		if err := c.ShouldBind(&filter); err != nil {
+			panic(err)
+		}
+
 		store := productstorage.NewSQLStore(db)
 		biz := productbiz.NewListProductBiz(store)
 
-		result, err := biz.ListProduct(c.Request.Context(), &pagingData)
+		result, err := biz.ListProduct(c.Request.Context(), &filter, &pagingData)
 
 		if err != nil {
 			panic(err)

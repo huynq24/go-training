@@ -7,7 +7,7 @@ import (
 )
 
 type ListProductStore interface {
-	ListDataWithCondition(context context.Context, condition map[string]interface{}, paging *common.Paging, moreKeys ...string) ([]productmodel.Product, error)
+	ListDataWithCondition(context context.Context, condition map[string]interface{}, filter *productmodel.Filter, paging *common.Paging, moreKeys ...string) ([]productmodel.Product, error)
 }
 
 type listProductBiz struct {
@@ -18,8 +18,8 @@ func NewListProductBiz(store ListProductStore) *listProductBiz {
 	return &listProductBiz{store: store}
 }
 
-func (biz *listProductBiz) ListProduct(ctx context.Context, paging *common.Paging) ([]productmodel.Product, error) {
-	result, err := biz.store.ListDataWithCondition(ctx, nil, paging)
+func (biz *listProductBiz) ListProduct(ctx context.Context, filter *productmodel.Filter, paging *common.Paging) ([]productmodel.Product, error) {
+	result, err := biz.store.ListDataWithCondition(ctx, nil, filter, paging)
 
 	if err != nil {
 		return nil, err
