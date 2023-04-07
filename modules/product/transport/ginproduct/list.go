@@ -15,10 +15,9 @@ func ListProducts(appCtx app_context.AppContext) gin.HandlerFunc {
 
 		var pagingData common.Paging
 		if err := c.ShouldBind(&pagingData); err != nil {
-			c.JSON(http.StatusBadRequest, err)
+			panic(err)
 		}
 		pagingData.Fulfill()
-
 		store := productstorage.NewSQLStore(db)
 		biz := productbiz.NewListProductBiz(store)
 

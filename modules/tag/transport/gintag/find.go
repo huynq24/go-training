@@ -12,14 +12,10 @@ import (
 func FindTag(ctx app_context.AppContext) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		db := ctx.GetMainDBConnection()
-
 		id, err := common.FromBase58(context.Param("id"))
-		//id, err := strconv.Atoi(context.Param("id"))
 
 		if err != nil {
-			context.JSON(http.StatusBadRequest, err)
 			panic(err)
-			return
 		}
 
 		store := tagstorage.NewSQLStore(db)
@@ -44,13 +40,12 @@ func FindAllTags(ctx app_context.AppContext) gin.HandlerFunc {
 		biz := tagbiz.NewFindTagBiz(store)
 
 		result, err := biz.FindAllTags(context.Request.Context())
+		if err != nil {
+			panic(err)
+		}
 
 		for i := range result {
 			result[i].Mask()
-		}
-
-		if err != nil {
-			panic(err)
 		}
 
 		context.JSON(http.StatusOK, result)

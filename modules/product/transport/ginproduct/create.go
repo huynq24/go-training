@@ -15,7 +15,6 @@ func CreateProduct(appCtx app_context.AppContext) gin.HandlerFunc {
 
 		if err := c.ShouldBind(&data); err != nil {
 			panic(err)
-			return
 		}
 
 		store := productstorage.NewSQLStore(appCtx.GetMainDBConnection())
@@ -23,7 +22,6 @@ func CreateProduct(appCtx app_context.AppContext) gin.HandlerFunc {
 
 		if err := biz.CreateProduct(c.Request.Context(), &data); err != nil {
 			panic(err)
-			return
 		}
 
 		c.JSON(http.StatusOK, &data)

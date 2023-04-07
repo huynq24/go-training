@@ -15,7 +15,6 @@ func CreateTag(appCtx app_context.AppContext) gin.HandlerFunc {
 
 		if err := c.ShouldBind(&data); err != nil {
 			panic(err)
-			return
 		}
 
 		store := categorystorage.NewSQLStore(appCtx.GetMainDBConnection())
@@ -23,7 +22,6 @@ func CreateTag(appCtx app_context.AppContext) gin.HandlerFunc {
 
 		if err := biz.CreateCategory(c.Request.Context(), &data); err != nil {
 			panic(err)
-			return
 		}
 
 		c.JSON(http.StatusOK, &data)

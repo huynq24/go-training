@@ -10,7 +10,7 @@ import (
 func (s *sqlStore) FindDataWithCondition(context context.Context, condition map[string]interface{}) (*productmodel.Product, error) {
 	var data productmodel.Product
 
-	if err := s.db.Where(condition).First(&data).Error; err != nil {
+	if err := s.db.WithContext(context).Where(condition).First(&data).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return nil, errors.New("record not found")
 		}
@@ -23,7 +23,7 @@ func (s *sqlStore) FindDataWithCondition(context context.Context, condition map[
 func (s *sqlStore) FindAllData(context context.Context) ([]productmodel.Product, error) {
 	var data []productmodel.Product
 
-	if err := s.db.Find(&data).Error; err != nil {
+	if err := s.db.WithContext(context).Find(&data).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return nil, errors.New("record not found")
 		}
@@ -31,4 +31,17 @@ func (s *sqlStore) FindAllData(context context.Context) ([]productmodel.Product,
 	}
 
 	return data, nil
+}
+
+func (s *sqlStore) FindProductExist(ctx context.Context, condition map[string]interface{}) (*productmodel.Product, error) {
+	var data productmodel.Product
+
+	if err := s.db.WithContext(ctx).Where(condition).First(&data).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return nil, errors.New("record not found")
+		}
+		return nil, err
+	}
+
+	return &data, nil
 }

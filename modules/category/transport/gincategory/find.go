@@ -12,9 +12,7 @@ import (
 func FindCategory(ctx app_context.AppContext) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		db := ctx.GetMainDBConnection()
-
 		id, err := common.FromBase58(context.Param("id"))
-		//id, err := strconv.Atoi(context.Param("id"))
 
 		if err != nil {
 			context.JSON(http.StatusBadRequest, err)
@@ -44,12 +42,12 @@ func FindAllCategories(ctx app_context.AppContext) gin.HandlerFunc {
 		biz := categorybiz.NewFindCategoryBiz(store)
 
 		result, err := biz.FindAllCategories(context.Request.Context())
-		for i := range result {
-			result[i].Mask()
-		}
-
 		if err != nil {
 			panic(err)
+		}
+
+		for i := range result {
+			result[i].Mask()
 		}
 
 		context.JSON(http.StatusOK, result)

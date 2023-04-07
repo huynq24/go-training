@@ -12,26 +12,20 @@ import (
 func FindProduct(ctx app_context.AppContext) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		db := ctx.GetMainDBConnection()
-
 		id, err := common.FromBase58(context.Param("id"))
-		//id, err := strconv.Atoi(context.Param("id"))
 
 		if err != nil {
-			context.JSON(http.StatusBadRequest, err)
 			panic(err)
-			return
 		}
 
 		store := productstorage.NewSQLStore(db)
 		biz := productbiz.NewFindProductBiz(store)
 
 		result, err := biz.FindProduct(context.Request.Context(), int(id.GetLocalID()))
-		result.Mask()
-
 		if err != nil {
 			panic(err)
 		}
-
+		result.Mask()
 		context.JSON(http.StatusOK, result)
 	}
 }
