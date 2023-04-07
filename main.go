@@ -47,7 +47,7 @@ func main() {
 	products := v1.Group("/products")
 	{
 		products.POST("", ginproduct.CreateProduct(appCtx))
-		products.GET("", ginproduct.FindAllProducts(appCtx))
+		products.GET("", ginproduct.ListProducts(appCtx))
 		products.GET("/:id", ginproduct.FindProduct(appCtx))
 		products.PATCH("/:id", ginproduct.UpdateProduct(appCtx))
 		products.DELETE("/:id", ginproduct.DeleteProduct(appCtx))
