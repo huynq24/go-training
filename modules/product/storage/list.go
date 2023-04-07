@@ -28,7 +28,7 @@ func (s *sqlStore) ListDataWithCondition(context context.Context, condition map[
 		}
 	}
 
-	if err := db.Limit(paging.Limit).Order("id asc").Find(&result).Error; err != nil {
+	if err := db.Limit(paging.Limit).Order("id desc").Find(&result).Error; err != nil {
 		return nil, err
 	}
 	return result, nil
