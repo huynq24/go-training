@@ -20,7 +20,7 @@ func (s *sqlStore) FindDataWithCondition(context context.Context, condition map[
 	return &data, nil
 }
 
-func (s *sqlStore) FindAllData(context context.Context) (*[]categorymodel.Category, error) {
+func (s *sqlStore) FindAllData(context context.Context) ([]categorymodel.Category, error) {
 	var data []categorymodel.Category
 
 	if err := s.db.Find(&data).Error; err != nil {
@@ -30,5 +30,5 @@ func (s *sqlStore) FindAllData(context context.Context) (*[]categorymodel.Catego
 		return nil, err
 	}
 
-	return &data, nil
+	return data, nil
 }

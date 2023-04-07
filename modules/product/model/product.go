@@ -10,9 +10,12 @@ type Product struct {
 	Image           string `json:"image" gorm:"column:image"`
 	Description     string `json:"description" gorm:"column:description"`
 	CategoryId      int    `json:"categoryId" gorm:"column:category_id"`
-	//Category        categorymodel.Category `json:"category" gorm:"foreignKey:CategoryId"`
 }
 
 func (Product) TableName() string {
 	return "products"
+}
+
+func (p *Product) Mask() {
+	p.GenUID(common.DbTypeProduct)
 }

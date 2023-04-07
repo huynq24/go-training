@@ -10,3 +10,7 @@ type Category struct {
 func (Category) TableName() string {
 	return "categories"
 }
+
+func (c *Category) Mask() {
+	c.GenUID(common.DbTypeCategory)
+}

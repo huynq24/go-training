@@ -10,3 +10,7 @@ type Tag struct {
 func (Tag) TableName() string {
 	return "tags"
 }
+
+func (t *Tag) Mask() {
+	t.GenUID(common.DbTypeTag)
+}
