@@ -7,7 +7,7 @@ import (
 )
 
 type CreateProductStore interface {
-	Create(ctx context.Context, data *productmodel.Product) error
+	Create(ctx context.Context, data *productmodel.ProductCreate) error
 	FindProductExist(ctx context.Context, condition map[string]interface{}) (*productmodel.Product, error)
 }
 
@@ -19,9 +19,9 @@ func NewCreateProductBiz(store CreateProductStore) *createProductBiz {
 	return &createProductBiz{store: store}
 }
 
-func (biz *createProductBiz) CreateProduct(ctx context.Context, data *productmodel.Product) error {
+func (biz *createProductBiz) CreateProduct(ctx context.Context, data *productmodel.ProductCreate) error {
 	_, err := biz.store.FindProductExist(ctx, map[string]interface{}{"title": data.Title, "category_id": data.CategoryId})
-	if err != nil && err != gorm.ErrRecordNotFound {
+	if err != nil && err.Error() != gorm.ErrRecordNotFound.Error() {
 		return err
 	}
 	return biz.store.Create(ctx, data)

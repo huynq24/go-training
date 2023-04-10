@@ -1,11 +1,11 @@
 package categorymodel
 
 import (
-	common2 "golang-training/internal/common"
+	"golang-training/internal/common"
 )
 
 type Category struct {
-	common2.SQLModel
+	common.SQLModel
 	Title string `json:"title" binding:"required" gorm:"column:title;"`
 }
 
@@ -14,5 +14,5 @@ func (Category) TableName() string {
 }
 
 func (c *Category) Mask() {
-	c.GenUID(common2.DbTypeCategory)
+	c.GenUID(common.DbTypeCategory)
 }

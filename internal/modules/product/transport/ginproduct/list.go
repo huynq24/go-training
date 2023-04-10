@@ -36,6 +36,11 @@ func ListProducts(appCtx app_context.AppContext) gin.HandlerFunc {
 
 		for i := range result {
 			result[i].Mask()
+			result[i].Category.Mask()
+			var productTag = result[i].ProductTags
+			for j := range productTag {
+				productTag[j].Tag.Mask()
+			}
 			if i == len(result)-1 {
 				pagingData.NextCursor = result[i].FakeId.String()
 			}

@@ -10,7 +10,7 @@ import (
 func (s *sqlStore) FindDataWithCondition(context context.Context, condition map[string]interface{}) (*productmodel.Product, error) {
 	var data productmodel.Product
 
-	if err := s.db.WithContext(context).Where(condition).First(&data).Error; err != nil {
+	if err := s.db.WithContext(context).Preload("Category").Where(condition).First(&data).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return nil, errors.New("record not found")
 		}

@@ -2,15 +2,15 @@ package categorystorage
 
 import (
 	"context"
-	common2 "golang-training/internal/common"
-	categorymodel2 "golang-training/internal/modules/category/model"
+	"golang-training/internal/common"
+	categorymodel "golang-training/internal/modules/category/model"
 )
 
-func (s *sqlStore) ListDataWithCondition(context context.Context, filter *categorymodel2.Filter, paging *common2.Paging, moreKeys ...string) ([]categorymodel2.Category, error) {
-	var result []categorymodel2.Category
+func (s *sqlStore) ListDataWithCondition(context context.Context, filter *categorymodel.Filter, paging *common.Paging, moreKeys ...string) ([]categorymodel.Category, error) {
+	var result []categorymodel.Category
 
 	db := s.db
-	db = db.WithContext(context).Table(categorymodel2.Category{}.TableName()).Where("status in (1)")
+	db = db.WithContext(context).Table(categorymodel.Category{}.TableName()).Where("status in (1)")
 
 	if v := filter; v != nil {
 		if v.CategoryTitle != "" {
@@ -27,7 +27,7 @@ func (s *sqlStore) ListDataWithCondition(context context.Context, filter *catego
 	}
 
 	if paging.FakeCursor != "" {
-		if uid, err := common2.FromBase58(paging.FakeCursor); err == nil {
+		if uid, err := common.FromBase58(paging.FakeCursor); err == nil {
 			db = db.WithContext(context).Where("id < ?", uid.GetLocalID())
 		} else {
 			db = db.WithContext(context).Offset((paging.Page - 1) * paging.Limit)

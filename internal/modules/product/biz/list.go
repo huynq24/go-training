@@ -3,11 +3,11 @@ package productbiz
 import (
 	"context"
 	"golang-training/internal/common"
-	productmodel2 "golang-training/internal/modules/product/model"
+	productmodel "golang-training/internal/modules/product/model"
 )
 
 type ListProductStore interface {
-	ListDataWithCondition(context context.Context, filter *productmodel2.Filter, paging *common.Paging, moreKeys ...string) ([]productmodel2.Product, error)
+	ListDataWithCondition(context context.Context, filter *productmodel.Filter, paging *common.Paging, moreKeys ...string) ([]*productmodel.Product, error)
 }
 
 type listProductBiz struct {
@@ -18,7 +18,7 @@ func NewListProductBiz(store ListProductStore) *listProductBiz {
 	return &listProductBiz{store: store}
 }
 
-func (biz *listProductBiz) ListProduct(ctx context.Context, filter *productmodel2.Filter, paging *common.Paging) ([]productmodel2.Product, error) {
+func (biz *listProductBiz) ListProduct(ctx context.Context, filter *productmodel.Filter, paging *common.Paging) ([]*productmodel.Product, error) {
 	result, err := biz.store.ListDataWithCondition(ctx, filter, paging)
 
 	if err != nil {

@@ -11,7 +11,7 @@ import (
 
 func CreateProduct(appCtx app_context.AppContext) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var data productmodel.Product
+		var data productmodel.ProductCreate
 
 		if err := c.ShouldBind(&data); err != nil {
 			panic(err)

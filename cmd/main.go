@@ -5,9 +5,9 @@ import (
 	"golang-training/internal/common"
 	"golang-training/internal/components/app_context"
 	"golang-training/internal/components/mysqldb"
-	gincategory2 "golang-training/internal/modules/category/transport/gincategory"
-	ginproduct2 "golang-training/internal/modules/product/transport/ginproduct"
-	gintag2 "golang-training/internal/modules/tag/transport/gintag"
+	"golang-training/internal/modules/category/transport/gincategory"
+	"golang-training/internal/modules/product/transport/ginproduct"
+	"golang-training/internal/modules/tag/transport/gintag"
 )
 
 func main() {
@@ -24,31 +24,31 @@ func main() {
 	// tags api
 	tags := v1.Group("/tags")
 	{
-		tags.POST("", gintag2.CreateTag(appCtx))
-		tags.GET("", gintag2.ListTags(appCtx))
-		tags.GET("/:id", gintag2.FindTag(appCtx))
-		tags.PATCH("/:id", gintag2.UpdateTag(appCtx))
-		tags.DELETE("/:id", gintag2.DeleteTag(appCtx))
+		tags.POST("", gintag.CreateTag(appCtx))
+		tags.GET("", gintag.ListTags(appCtx))
+		tags.GET("/:id", gintag.FindTag(appCtx))
+		tags.PATCH("/:id", gintag.UpdateTag(appCtx))
+		tags.DELETE("/:id", gintag.DeleteTag(appCtx))
 	}
 
 	// category api
 	categories := v1.Group("/categories")
 	{
-		categories.POST("", gincategory2.CreateTag(appCtx))
-		categories.GET("", gincategory2.ListCategories(appCtx))
-		categories.GET("/:id", gincategory2.FindCategory(appCtx))
-		categories.PATCH("/:id", gincategory2.UpdateCategory(appCtx))
-		categories.DELETE("/:id", gincategory2.DeleteCategory(appCtx))
+		categories.POST("", gincategory.CreateTag(appCtx))
+		categories.GET("", gincategory.ListCategories(appCtx))
+		categories.GET("/:id", gincategory.FindCategory(appCtx))
+		categories.PATCH("/:id", gincategory.UpdateCategory(appCtx))
+		categories.DELETE("/:id", gincategory.DeleteCategory(appCtx))
 	}
 
 	// product api
 	products := v1.Group("/products")
 	{
-		products.POST("", ginproduct2.CreateProduct(appCtx))
-		products.GET("", ginproduct2.ListProducts(appCtx))
-		products.GET("/:id", ginproduct2.FindProduct(appCtx))
-		products.PATCH("/:id", ginproduct2.UpdateProduct(appCtx))
-		products.DELETE("/:id", ginproduct2.DeleteProduct(appCtx))
+		products.POST("", ginproduct.CreateProduct(appCtx))
+		products.GET("", ginproduct.ListProducts(appCtx))
+		products.GET("/:id", ginproduct.FindProduct(appCtx))
+		products.PATCH("/:id", ginproduct.UpdateProduct(appCtx))
+		products.DELETE("/:id", ginproduct.DeleteProduct(appCtx))
 	}
 
 	err = r.Run()

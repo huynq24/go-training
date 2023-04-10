@@ -1,11 +1,11 @@
 package tagmodel
 
 import (
-	common2 "golang-training/internal/common"
+	"golang-training/internal/common"
 )
 
 type Tag struct {
-	common2.SQLModel
+	common.SQLModel
 	Title string `json:"title" binding:"required" gorm:"column:title;"`
 }
 
@@ -14,5 +14,5 @@ func (Tag) TableName() string {
 }
 
 func (t *Tag) Mask() {
-	t.GenUID(common2.DbTypeTag)
+	t.GenUID(common.DbTypeTag)
 }

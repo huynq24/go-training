@@ -26,6 +26,7 @@ func FindProduct(ctx app_context.AppContext) gin.HandlerFunc {
 			panic(err)
 		}
 		result.Mask()
+		result.Category.Mask()
 		context.JSON(http.StatusOK, result)
 	}
 }

@@ -3,7 +3,7 @@ package common
 import "time"
 
 type SQLModel struct {
-	Id        uint       `json:"-" gorm:"column:id;unique;not null;primaryKey;autoIncrement:true"`
+	Id        uint       `json:"-" gorm:"column:id;primaryKey;autoIncrement:true"`
 	FakeId    *UID       `json:"id" gorm:"-"`
 	Status    int        `json:"status,omitempty" gorm:"column:status;default:1"`
 	CreatedAt *time.Time `json:"created_at,omitempty" gorm:"column:created_at"`

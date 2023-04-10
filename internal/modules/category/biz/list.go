@@ -3,11 +3,11 @@ package categorybiz
 import (
 	"context"
 	"golang-training/internal/common"
-	categorymodel2 "golang-training/internal/modules/category/model"
+	categorymodel "golang-training/internal/modules/category/model"
 )
 
 type ListCategoryStore interface {
-	ListDataWithCondition(context context.Context, filter *categorymodel2.Filter, paging *common.Paging, moreKeys ...string) ([]categorymodel2.Category, error)
+	ListDataWithCondition(context context.Context, filter *categorymodel.Filter, paging *common.Paging, moreKeys ...string) ([]categorymodel.Category, error)
 }
 
 type listCategoryBiz struct {
@@ -18,7 +18,7 @@ func NewListCategoryBiz(store ListCategoryStore) *listCategoryBiz {
 	return &listCategoryBiz{store: store}
 }
 
-func (biz *listCategoryBiz) ListCategory(ctx context.Context, filter *categorymodel2.Filter, paging *common.Paging) ([]categorymodel2.Category, error) {
+func (biz *listCategoryBiz) ListCategory(ctx context.Context, filter *categorymodel.Filter, paging *common.Paging) ([]categorymodel.Category, error) {
 	result, err := biz.store.ListDataWithCondition(ctx, filter, paging)
 
 	if err != nil {
