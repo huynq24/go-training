@@ -6,7 +6,7 @@ import (
 	productmodel "golang-training/internal/modules/product/model"
 )
 
-func (s *sqlStore) ListDataWithCondition(context context.Context, filter *productmodel.Filter, paging *common.Paging, moreKeys ...string) ([]*productmodel.Product, error) {
+func (s *sqlStore) ListProduct(context context.Context, filter *productmodel.Filter, paging *common.Paging, moreKeys ...string) ([]*productmodel.Product, error) {
 	var result []*productmodel.Product
 
 	db := s.db
@@ -34,7 +34,7 @@ func (s *sqlStore) ListDataWithCondition(context context.Context, filter *produc
 		}
 	}
 
-	if err := db.Limit(paging.Limit).Order("id desc").Preload("Category").Preload("ProductTags.Tag").Find(&result).Error; err != nil {
+	if err := db.Limit(paging.Limit).Order("id desc").Find(&result).Error; err != nil {
 		return nil, err
 	}
 	return result, nil

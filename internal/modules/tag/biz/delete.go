@@ -8,7 +8,7 @@ import (
 
 type DeleteTagStore interface {
 	Delete(context context.Context, id int) error
-	FindDataWithCondition(context context.Context, condition map[string]interface{}) (*tagmodel.Tag, error)
+	FindTag(context context.Context, condition map[string]interface{}) (*tagmodel.Tag, error)
 }
 
 type deleteTagBiz struct {
@@ -20,7 +20,7 @@ func NewDeleteTagBiz(store DeleteTagStore) *deleteTagBiz {
 }
 
 func (biz *deleteTagBiz) DeleteTag(ctx context.Context, id int) error {
-	oldData, err := biz.store.FindDataWithCondition(ctx, map[string]interface{}{"id": id})
+	oldData, err := biz.store.FindTag(ctx, map[string]interface{}{"id": id})
 	if err != nil {
 		return err
 	}

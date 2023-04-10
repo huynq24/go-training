@@ -20,7 +20,6 @@ func NewListCategoryBiz(store ListCategoryStore) *listCategoryBiz {
 
 func (biz *listCategoryBiz) ListCategory(ctx context.Context, filter *categorymodel.Filter, paging *common.Paging) ([]categorymodel.Category, error) {
 	result, err := biz.store.ListDataWithCondition(ctx, filter, paging)
-
 	if err != nil {
 		return nil, err
 	}

@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func (s *sqlStore) FindDataWithCondition(context context.Context, condition map[string]interface{}) (*tagmodel.Tag, error) {
+func (s *sqlStore) FindTag(context context.Context, condition map[string]interface{}) (*tagmodel.Tag, error) {
 	var data tagmodel.Tag
 
 	if err := s.db.WithContext(context).Where(condition).First(&data).Error; err != nil {

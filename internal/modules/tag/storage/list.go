@@ -6,7 +6,7 @@ import (
 	tagmodel "golang-training/internal/modules/tag/model"
 )
 
-func (s *sqlStore) ListDataWithCondition(context context.Context, filter *tagmodel.Filter, paging *common.Paging, moreKeys ...string) ([]tagmodel.Tag, error) {
+func (s *sqlStore) ListTag(context context.Context, filter *tagmodel.Filter, paging *common.Paging, moreKeys ...string) ([]tagmodel.Tag, error) {
 	var result []tagmodel.Tag
 
 	db := s.db

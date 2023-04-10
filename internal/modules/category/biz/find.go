@@ -6,7 +6,7 @@ import (
 )
 
 type FindCategoryStore interface {
-	FindDataWithCondition(ctx context.Context, condition map[string]interface{}) (*categorymodel.Category, error)
+	FindCategory(ctx context.Context, condition map[string]interface{}) (*categorymodel.Category, error)
 }
 
 type findCategoryBiz struct {
@@ -18,7 +18,7 @@ func NewFindCategoryBiz(store FindCategoryStore) *findCategoryBiz {
 }
 
 func (biz *findCategoryBiz) FindCategory(ctx context.Context, id int) (*categorymodel.Category, error) {
-	result, err := biz.store.FindDataWithCondition(ctx, map[string]interface{}{"id": id})
+	result, err := biz.store.FindCategory(ctx, map[string]interface{}{"id": id})
 
 	if err != nil {
 		return nil, err

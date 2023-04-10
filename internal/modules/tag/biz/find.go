@@ -6,7 +6,7 @@ import (
 )
 
 type FindTagStore interface {
-	FindDataWithCondition(ctx context.Context, condition map[string]interface{}) (*tagmodel.Tag, error)
+	FindTag(ctx context.Context, condition map[string]interface{}) (*tagmodel.Tag, error)
 }
 
 type findTagBiz struct {
@@ -18,7 +18,7 @@ func NewFindTagBiz(store FindTagStore) *findTagBiz {
 }
 
 func (biz *findTagBiz) FindTag(ctx context.Context, id int) (*tagmodel.Tag, error) {
-	result, err := biz.store.FindDataWithCondition(ctx, map[string]interface{}{"id": id})
+	result, err := biz.store.FindTag(ctx, map[string]interface{}{"id": id})
 
 	if err != nil {
 		return nil, err

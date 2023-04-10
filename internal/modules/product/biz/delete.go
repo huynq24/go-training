@@ -8,7 +8,7 @@ import (
 
 type DeleteProductStore interface {
 	Delete(context context.Context, id int) error
-	FindDataWithCondition(context context.Context, condition map[string]interface{}) (*productmodel.Product, error)
+	FindProduct(context context.Context, condition map[string]interface{}) (*productmodel.Product, error)
 }
 
 type deleteProductBiz struct {
@@ -20,7 +20,7 @@ func NewDeleteProductBiz(store DeleteProductStore) *deleteProductBiz {
 }
 
 func (biz *deleteProductBiz) DeleteProduct(ctx context.Context, id int) error {
-	oldData, err := biz.store.FindDataWithCondition(ctx, map[string]interface{}{"id": id})
+	oldData, err := biz.store.FindProduct(ctx, map[string]interface{}{"id": id})
 	if err != nil {
 		return err
 	}

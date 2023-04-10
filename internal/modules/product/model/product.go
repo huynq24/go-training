@@ -25,10 +25,10 @@ type ProductCreate struct {
 }
 
 type ProductUpdate struct {
-	Title       string `json:"title" binding:"required" gorm:"column:title;"`
-	Image       string `json:"image" gorm:"column:image"`
-	Description string `json:"description" gorm:"column:description"`
-	CategoryId  string `json:"categoryId" gorm:"column:category_id"`
+	Title       *string `json:"title" binding:"required" gorm:"column:title;"`
+	Image       *string `json:"image" gorm:"column:image"`
+	Description *string `json:"description" gorm:"column:description"`
+	CategoryId  *string `json:"categoryId" gorm:"column:category_id"`
 }
 
 func (ProductCreate) TableName() string {

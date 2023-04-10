@@ -7,7 +7,7 @@ import (
 )
 
 type UpdateCategory interface {
-	FindDataWithCondition(ctx context.Context, condition map[string]interface{}) (*categorymodel.Category, error)
+	FindCategory(ctx context.Context, condition map[string]interface{}) (*categorymodel.Category, error)
 	UpdateData(ctx context.Context, id int, data *categorymodel.Category) error
 }
 
@@ -20,7 +20,7 @@ func NewUpdateCategoryBiz(store UpdateCategory) *updateCategory {
 }
 
 func (biz *updateCategory) UpdateCategoryBiz(ctx context.Context, id int, data *categorymodel.Category) error {
-	oldData, err := biz.Store.FindDataWithCondition(ctx, map[string]interface{}{"id": id})
+	oldData, err := biz.Store.FindCategory(ctx, map[string]interface{}{"id": id})
 	if err != nil {
 		return err
 	}

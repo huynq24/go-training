@@ -8,7 +8,7 @@ import (
 )
 
 type UpdateProduct interface {
-	FindDataWithCondition(ctx context.Context, condition map[string]interface{}) (*productmodel.Product, error)
+	FindProduct(ctx context.Context, condition map[string]interface{}) (*productmodel.Product, error)
 	UpdateData(ctx context.Context, id int, data productmodel.Product) error
 }
 
@@ -21,7 +21,7 @@ func NewUpdateProductBiz(store UpdateProduct) *updateProduct {
 }
 
 func (biz *updateProduct) UpdateProductBiz(ctx context.Context, id int, data *productmodel.ProductUpdate) error {
-	oldData, err := biz.Store.FindDataWithCondition(ctx, map[string]interface{}{"id": id})
+	oldData, err := biz.Store.FindProduct(ctx, map[string]interface{}{"id": id})
 	if err != nil {
 		return err
 	}
@@ -31,12 +31,20 @@ func (biz *updateProduct) UpdateProductBiz(ctx context.Context, id int, data *pr
 	}
 
 	var updateData productmodel.Product
-	updateData.Title = data.Title
-	updateData.Image = data.Image
-	updateData.Description = data.Description
+	if data.Title != nil {
+		updateData.Title = *data.Title
+	}
 
-	if data.CategoryId != "" {
-		uid, err := common.FromBase58(data.CategoryId)
+	if data.Image != nil {
+		updateData.Image = *data.Image
+	}
+
+	if data.Description != nil {
+		updateData.Description = *data.Description
+	}
+
+	if data.CategoryId != nil {
+		uid, err := common.FromBase58(*data.CategoryId)
 		if err != nil {
 			return err
 		}

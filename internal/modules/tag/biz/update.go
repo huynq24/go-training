@@ -7,7 +7,7 @@ import (
 )
 
 type UpdateTag interface {
-	FindDataWithCondition(ctx context.Context, condition map[string]interface{}) (*tagmodel.Tag, error)
+	FindTag(ctx context.Context, condition map[string]interface{}) (*tagmodel.Tag, error)
 	UpdateData(ctx context.Context, id int, data *tagmodel.Tag) error
 }
 
@@ -20,7 +20,7 @@ func NewUpdateTagBiz(store UpdateTag) *updateTag {
 }
 
 func (biz *updateTag) UpdateTagBiz(ctx context.Context, id int, data *tagmodel.Tag) error {
-	oldData, err := biz.Store.FindDataWithCondition(ctx, map[string]interface{}{"id": id})
+	oldData, err := biz.Store.FindTag(ctx, map[string]interface{}{"id": id})
 	if err != nil {
 		return err
 	}

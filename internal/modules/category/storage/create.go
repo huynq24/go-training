@@ -6,9 +6,5 @@ import (
 )
 
 func (s *sqlStore) Create(ctx context.Context, data *categorymodel.Category) error {
-	if err := s.db.WithContext(ctx).Create(data).Error; err != nil {
-		return err
-	}
-
-	return nil
+	return s.db.WithContext(ctx).Create(data).Error
 }

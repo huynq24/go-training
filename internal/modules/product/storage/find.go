@@ -7,7 +7,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func (s *sqlStore) FindDataWithCondition(context context.Context, condition map[string]interface{}) (*productmodel.Product, error) {
+func (s *sqlStore) FindProduct(context context.Context, condition map[string]interface{}) (*productmodel.Product, error) {
 	var data productmodel.Product
 
 	if err := s.db.WithContext(context).Preload("Category").Where(condition).First(&data).Error; err != nil {

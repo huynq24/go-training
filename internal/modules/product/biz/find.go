@@ -6,7 +6,7 @@ import (
 )
 
 type FindProductStore interface {
-	FindDataWithCondition(ctx context.Context, condition map[string]interface{}) (*productmodel.Product, error)
+	FindProduct(ctx context.Context, condition map[string]interface{}) (*productmodel.Product, error)
 }
 
 type findProductBiz struct {
@@ -18,7 +18,7 @@ func NewFindProductBiz(store FindProductStore) *findProductBiz {
 }
 
 func (biz *findProductBiz) FindProduct(ctx context.Context, id int) (*productmodel.Product, error) {
-	result, err := biz.store.FindDataWithCondition(ctx, map[string]interface{}{"id": id})
+	result, err := biz.store.FindProduct(ctx, map[string]interface{}{"id": id})
 
 	if err != nil {
 		return nil, err
