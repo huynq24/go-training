@@ -21,13 +21,8 @@ func NewCreateTagBiz(store CreatTagStore) *createTagBiz {
 
 func (biz *createTagBiz) CreateTag(ctx context.Context, data *tagmodel.Tag) error {
 	_, err := biz.store.FindTagExist(ctx, map[string]interface{}{"title": data.Title})
-	if err != nil {
-		if err.Error() == gorm.ErrRecordNotFound.Error() && data.Title != "" {
-			if err := biz.store.Create(ctx, data); err != nil {
-				return err
-			}
-		}
-		return nil
+	if err != nil && err.Error() == gorm.ErrRecordNotFound.Error() && data.Title != "" {
+		return biz.store.Create(ctx, data)
 	}
 	return nil
 }

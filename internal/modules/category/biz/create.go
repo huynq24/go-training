@@ -21,13 +21,8 @@ func NewCreateCategoryBiz(store CreateCategoryStore) *createCategoryBiz {
 
 func (biz *createCategoryBiz) CreateCategory(ctx context.Context, data *categorymodel.Category) error {
 	_, err := biz.store.FindCategoryExist(ctx, map[string]interface{}{"title": data.Title})
-	if err != nil {
-		if err.Error() == gorm.ErrRecordNotFound.Error() && data.Title != "" {
-			if err := biz.store.Create(ctx, data); err != nil {
-				return err
-			}
-		}
-		return nil
+	if err != nil && err.Error() == gorm.ErrRecordNotFound.Error() && data.Title != "" {
+		return biz.store.Create(ctx, data)
 	}
 	return nil
 }
